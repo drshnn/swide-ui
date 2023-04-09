@@ -5,3 +5,10 @@
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
+html,body{
+  height: 100%;
+  width:100%;
+}
+.max-width{
+    @apply w-full max-w-6xl mx-auto px-3;
+}
