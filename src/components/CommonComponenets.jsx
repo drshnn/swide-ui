@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export const Dropdown = () => {
   const [toggleDropdown, setToggleDropdown] = useState(false);
-  const listItemHoverStyle = "hover:bg-gray-200 rounded-md p-2 cursor-pointer";
+  const listItemHoverStyle = "hover:bg-gray-100 rounded-md p-2 cursor-pointer";
+
   return (
     <div className="dropdown relative flex flex-col items-center">
       <button
+        id="dropdown-button"
         className="px-4 py-2 text-white bg-blue-500 rounded-md outline-none hover:bg-blue-600 active:bg-blue-700"
         onClick={() => setToggleDropdown((prev) => !prev)}
       >
