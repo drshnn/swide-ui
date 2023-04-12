@@ -25,11 +25,6 @@ export const Dropdown = () => {
 };
 
 export const Calendar = () => {
-  let date = new Date(),
-    currYear = date.getFullYear(),
-    currMonth = date.getMonth();
-  const [selectedMonth, setSelectedMonth] = useState(date.getMonth());
-  const [selectedYear, setSelectedYear] = useState(date.getFullYear());
   const months = [
     "January",
     "February",
@@ -44,15 +39,76 @@ export const Calendar = () => {
     "November",
     "December",
   ];
-  const weak = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"];
+  const weak = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
 
-  console.log(date, currYear, currMonth);
-  console.log("first" + " " + new Date(currYear, currMonth, 1).getDay());
-  console.log("last" + " " + new Date(currYear, currMonth + 1, 0).getDate());
+  const [date, setDate] = useState(new Date());
+  const [dateArr, setDateArr] = useState([]);
+  const [selectedMonth, setSelectedMonth] = useState(date.getMonth());
+  const [selectedYear, setSelectedYear] = useState(date.getFullYear());
+  useEffect(() => {
+    setDateArr(createDateArray());
+  }, []);
+  useEffect(() => {
+    setDateArr(createDateArray());
+  }, [selectedMonth, selectedYear]);
+  const decreaseMonthHandler = () => {
+    if (selectedMonth === 0) {
+      setSelectedMonth(11);
+      setSelectedYear((prev) => prev - 1);
+    } else {
+      setSelectedMonth((prev) => prev - 1);
+    }
+  };
+
+  const increaseMonthHandler = () => {
+    if (selectedMonth === 11) {
+      setSelectedMonth(0);
+      setSelectedYear((prev) => prev + 1);
+    } else {
+      setSelectedMonth((prev) => prev + 1);
+    }
+  };
+  const createDateArray = () => {
+    let tempDateArr = [];
+    let lastDateOfLastMonth = getLastDateOfLastMonth(
+      selectedMonth,
+      selectedYear
+    );
+    for (
+      let i = new Date(selectedYear, selectedMonth, 1).getDay() - 1;
+      i >= 0;
+      i--
+    ) {
+      tempDateArr.push([lastDateOfLastMonth - i, -1]);
+    }
+
+    for (
+      let i = 1;
+      i <= new Date(selectedYear, selectedMonth + 1, 0).getDate();
+      i++
+    ) {
+      tempDateArr.push([i, selectedMonth]);
+    }
+    let tempArrLength = tempDateArr.length;
+    for (let i = 1; i <= 42 - tempArrLength; i++) {
+      tempDateArr.push([i, -1]);
+    }
+    return tempDateArr;
+  };
+  function getLastDateOfLastMonth(month, year) {
+    var date = new Date(year, month, 1);
+    date.setDate(0);
+    var lastDayOfLastMonth = date.getDate();
+    return lastDayOfLastMonth;
+  }
+  createDateArray();
   return (
     <div className="calander flex flex-col gap-4 h-[27rem] w-[27rem] rounded-md border-2 border-gray-200 p-7 bg-white">
       <div className="month-year h-10 w-full flex items-center justify-between">
-        <div className="flex items-center justify-center rounded-full w-10 h-10 hover:bg-gray-200">
+        <div
+          className="flex items-center justify-center rounded-full w-10 h-10 hover:bg-gray-200"
+          onClick={decreaseMonthHandler}
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -69,7 +125,10 @@ export const Calendar = () => {
           </svg>
         </div>
         <div className="flex items-center justify-center">{`${months[selectedMonth]}, ${selectedYear}`}</div>
-        <div className="flex items-center justify-center rounded-full w-10 h-10 hover:bg-gray-200">
+        <div
+          className="flex items-center justify-center rounded-full w-10 h-10 hover:bg-gray-200"
+          onClick={increaseMonthHandler}
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -98,12 +157,16 @@ export const Calendar = () => {
           ))}
         </div>
         <div className=" grid grid-cols-7 gap-2 ">
-          {[...Array(42)].map((i, j) => (
+          {dateArr.map((i, j) => (
             <span
               key={j}
-              className="h-10 w-10 flex items-center justify-center rounded-full cursor-pointer hover:bg-gray-200"
+              className={`h-10 w-10 flex items-center justify-center rounded-full ${
+                i[1] === selectedMonth
+                  ? "cursor-pointer hover:bg-gray-200"
+                  : "text-gray-400"
+              }`}
             >
-              {j}
+              {i[0]}
             </span>
           ))}
         </div>
