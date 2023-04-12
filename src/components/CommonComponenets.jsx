@@ -39,7 +39,7 @@ export const Calendar = () => {
     "November",
     "December",
   ];
-  const weak = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
+  const week = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
 
   const [date, setDate] = useState(new Date());
   const [dateArr, setDateArr] = useState([]);
@@ -147,7 +147,7 @@ export const Calendar = () => {
       </div>
       <div className="day flex-1 flex  flex-col items-center gap-2">
         <div className="week grid grid-cols-7 gap-2">
-          {weak.map((day, index) => (
+          {week.map((day, index) => (
             <span
               className="h-10 w-10 flex items-center justify-center "
               key={index}
@@ -162,7 +162,7 @@ export const Calendar = () => {
               key={j}
               className={`h-10 w-10 flex items-center justify-center rounded-full ${
                 i[1] === selectedMonth
-                  ? "cursor-pointer hover:bg-gray-200"
+                  ? "cursor-pointer hover:bg-black hover:text-white"
                   : "text-gray-400"
               }`}
             >
