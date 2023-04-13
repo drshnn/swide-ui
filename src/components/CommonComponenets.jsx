@@ -1,8 +1,28 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 export const Dropdown = () => {
   const [toggleDropdown, setToggleDropdown] = useState(false);
   const listItemHoverStyle = "hover:bg-gray-100 rounded-md p-2 cursor-pointer";
+  const buttonRef = useRef();
+  const menuRef = useRef();
+
+  React.useEffect(() => {
+    window.addEventListener("click", handleClick);
+
+    // cleanup this component
+    return () => {
+      window.removeEventListener("click", handleClick);
+    };
+  }, []);
+  function handleClick(event) {
+    if (
+      event.target !== buttonRef.current &&
+      event.target !== menuRef.current
+    ) {
+      setToggleDropdown(false);
+    }
+    event.stopPropagation();
+  }
 
   return (
     <div className="dropdown relative flex flex-col items-center">
@@ -10,14 +30,24 @@ export const Dropdown = () => {
         id="dropdown-button"
         className="px-4 py-2 text-white bg-blue-500 rounded-md outline-none hover:bg-blue-600 active:bg-blue-700"
         onClick={() => setToggleDropdown((prev) => !prev)}
+        ref={buttonRef}
       >
         dropdown
       </button>
       {toggleDropdown && (
-        <ul className="absolute top-12 flex flex-col py-3 px-2 w-36 bg-white rounded-md border-2 border-gray-200 ">
-          <li className={listItemHoverStyle}>first item</li>
-          <li className={listItemHoverStyle}>second item</li>
-          <li className={listItemHoverStyle}>third item</li>
+        <ul
+          className="absolute top-12 flex flex-col py-3 px-2 w-36 bg-white rounded-md border-2 border-gray-200 "
+          ref={menuRef}
+        >
+          {["First Item", "Second Item", "Third Item"].map((i, j) => (
+            <li
+              className={listItemHoverStyle}
+              key={j}
+              onClick={() => setToggleDropdown(false)}
+            >
+              {i}
+            </li>
+          ))}
         </ul>
       )}
     </div>
@@ -45,9 +75,6 @@ export const Calendar = () => {
   const [dateArr, setDateArr] = useState([]);
   const [selectedMonth, setSelectedMonth] = useState(date.getMonth());
   const [selectedYear, setSelectedYear] = useState(date.getFullYear());
-  useEffect(() => {
-    setDateArr(createDateArray());
-  }, []);
   useEffect(() => {
     setDateArr(createDateArray());
   }, [selectedMonth, selectedYear]);
@@ -171,6 +198,62 @@ export const Calendar = () => {
           ))}
         </div>
       </div>
+    </div>
+  );
+};
+
+export const ProfileDropdown = () => {
+  const [toggleDropdown, setToggleDropdown] = useState(false);
+  const listItemHoverStyle = "hover:bg-gray-100 rounded-md p-2 cursor-pointer";
+  const buttonRef = useRef();
+  const menuRef = useRef();
+
+  React.useEffect(() => {
+    window.addEventListener("click", handleClick);
+
+    // cleanup this component
+    return () => {
+      window.removeEventListener("click", handleClick);
+    };
+  }, []);
+  function handleClick(event) {
+    if (
+      event.target !== buttonRef.current &&
+      event.target !== menuRef.current
+    ) {
+      setToggleDropdown(false);
+    }
+    event.stopPropagation();
+  }
+
+  return (
+    <div className="profile-dropdown relative flex flex-col items-center">
+      <div
+        className="pic h-14 w-14  rounded-full border-2 border-gray-200 flex items-center justify-center cursor-pointer"
+        onClick={() => setToggleDropdown((prev) => !prev)}
+        ref={buttonRef}
+      >
+        <div className="flex flex-col items-center gap-1">
+          <div className="head h-3 w-3 bg-gray-600  rounded-full"></div>
+          <div className="body w-7 h-3 rounded-l-xl rounded-r-xl bg-gray-600"></div>
+        </div>
+      </div>
+      {toggleDropdown && (
+        <ul
+          className="absolute top-16 flex flex-col py-3 px-2 w-36 bg-white rounded-md border-2 border-gray-200 "
+          ref={menuRef}
+        >
+          {["First Item", "Second Item", "Third Item"].map((i, j) => (
+            <li
+              className={listItemHoverStyle}
+              key={j}
+              onClick={() => setToggleDropdown(false)}
+            >
+              {i}
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };

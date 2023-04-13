@@ -1,4 +1,4 @@
-import { Calendar, Dropdown } from "./CommonComponenets";
+import { Calendar, Dropdown, ProfileDropdown } from "./CommonComponenets";
 import ListItem from "./ListItem";
 
 function List() {
@@ -10,6 +10,10 @@ function List() {
       <ListItem heading="calander input">
         <Calendar />
       </ListItem>
+      <ListItem heading="calander input">
+        <ProfileDropdown />
+      </ListItem>
+      <ListItem heading="calander input"></ListItem>
     </div>
   );
 }
