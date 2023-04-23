@@ -21,7 +21,6 @@ export const Dropdown = () => {
     ) {
       setToggleDropdown(false);
     }
-    event.stopPropagation();
   }
 
   return (
@@ -29,7 +28,10 @@ export const Dropdown = () => {
       <button
         id="dropdown-button"
         className="px-4 py-2 text-white bg-blue-500 rounded-md outline-none hover:bg-blue-600 active:bg-blue-700"
-        onClick={() => setToggleDropdown((prev) => !prev)}
+        onClick={(event) => {
+          setToggleDropdown((prev) => !prev);
+          event.stopPropagation();
+        }}
         ref={buttonRef}
       >
         dropdown
@@ -43,7 +45,10 @@ export const Dropdown = () => {
             <li
               className={listItemHoverStyle}
               key={j}
-              onClick={() => setToggleDropdown(false)}
+              onClick={(event) => {
+                setToggleDropdown(false);
+                event.stopPropagation();
+              }}
             >
               {i}
             </li>
@@ -223,14 +228,16 @@ export const ProfileDropdown = () => {
     ) {
       setToggleDropdown(false);
     }
-    event.stopPropagation();
   }
 
   return (
     <div className="profile-dropdown relative flex flex-col items-center">
       <div
         className="pic h-14 w-14  rounded-full border-2 border-gray-200 flex items-center justify-center cursor-pointer"
-        onClick={() => setToggleDropdown((prev) => !prev)}
+        onClick={(event) => {
+          setToggleDropdown((prev) => !prev);
+          event.stopPropagation();
+        }}
         ref={buttonRef}
       >
         <div className="flex flex-col items-center gap-1">
@@ -247,7 +254,10 @@ export const ProfileDropdown = () => {
             <li
               className={listItemHoverStyle}
               key={j}
-              onClick={() => setToggleDropdown(false)}
+              onClick={(event) => {
+                setToggleDropdown((prev) => false);
+                event.stopPropagation();
+              }}
             >
               {i}
             </li>
