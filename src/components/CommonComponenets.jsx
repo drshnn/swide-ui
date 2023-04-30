@@ -241,8 +241,8 @@ export const ProfileDropdown = () => {
         ref={buttonRef}
       >
         <div className="flex flex-col items-center gap-1">
-          <div className="head h-3 w-3 bg-gray-600  rounded-full"></div>
-          <div className="body w-7 h-3 rounded-l-xl rounded-r-xl bg-gray-600"></div>
+          <div className="head h-3 w-3 bg-gray-400   rounded-full"></div>
+          <div className="body w-6 h-2 rounded-t-lg bg-gray-400  "></div>
         </div>
       </div>
       {toggleDropdown && (
