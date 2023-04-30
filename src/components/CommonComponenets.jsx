@@ -232,22 +232,33 @@ export const ProfileDropdown = () => {
 
   return (
     <div className="profile-dropdown relative flex flex-col items-center">
-      <div
-        className="pic h-14 w-14  rounded-full border-2 border-gray-200 flex items-center justify-center cursor-pointer"
+      <button
+        className="p-3 bg-white border-2 border-gray-200 rounded-full hover:bg-gray-50 active:bg-gray-100"
         onClick={(event) => {
           setToggleDropdown((prev) => !prev);
           event.stopPropagation();
         }}
         ref={buttonRef}
       >
-        <div className="flex flex-col items-center gap-1">
-          <div className="head h-3 w-3 bg-gray-400   rounded-full"></div>
-          <div className="body w-6 h-2 rounded-t-lg bg-gray-400  "></div>
-        </div>
-      </div>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="feather feather-user"
+        >
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+          <circle cx="12" cy="7" r="4" />
+        </svg>
+      </button>
       {toggleDropdown && (
         <ul
-          className="absolute top-16 flex flex-col py-3 px-2 w-36 bg-white rounded-md border-2 border-gray-200 "
+          className="absolute top-14 flex flex-col py-3 px-2 w-36 bg-white rounded-md border-2 border-gray-200 "
           ref={menuRef}
         >
           {["First Item", "Second Item", "Third Item"].map((i, j) => (
